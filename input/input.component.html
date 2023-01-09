@@ -1,0 +1,15 @@
+<form class="example-form">
+  <div class="label">
+    <mat-label>{{ label }}</mat-label>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      #myInput
+      matInput
+      [placeholder]="placeholder"
+      [formControl]="inputControl"
+      (blur)="onBlur()"
+    />
+  </mat-form-field>
+</form>

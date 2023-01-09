@@ -1,0 +1,14 @@
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.right {
+  display: flex;
+  justify-content: right;
+}

@@ -1,0 +1,11 @@
+<div flex [class]="getClass()">
+  <div style="padding: 1%">
+    <app-button
+      [label]="submitLabel"
+      (click)="buttonClick('submit')"
+    ></app-button>
+  </div>
+  <div style="padding: 1%">
+    <app-button label="reset" (click)="buttonClick('reset')"></app-button>
+  </div>
+</div>

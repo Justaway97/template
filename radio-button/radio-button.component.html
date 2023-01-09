@@ -1,0 +1,17 @@
+<ng-container *ngIf="label">
+  <div class="label">
+    <mat-label>{{ label }}</mat-label>
+  </div>
+</ng-container>
+<mat-radio-group [(ngModel)]="value">
+  <div [class]="layout === 'vertical' ? 'radio-vertical' : 'radio'">
+    <mat-radio-button
+      class="option"
+      *ngFor="let option of options"
+      [value]="option"
+      (change)="valueChanged(option)"
+    >
+      {{ option }}
+    </mat-radio-button>
+  </div>
+</mat-radio-group>

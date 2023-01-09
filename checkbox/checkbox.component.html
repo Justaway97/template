@@ -1,0 +1,26 @@
+<ng-container *ngIf="label">
+  <div class="label">
+    <mat-label>{{ label }}</mat-label>
+  </div>
+</ng-container>
+<div [class]="layout === 'vertical' ? 'checkbox-vertical' : 'checkbox'">
+  <ng-container *ngFor="let opt of options">
+    <mat-checkbox
+      class="option"
+      [checked]="value?.includes(opt)"
+      (change)="arrayValueChanged(opt)"
+    >
+      <ng-container *ngIf="displayOption">
+        {{ opt }}
+      </ng-container>
+    </mat-checkbox>
+  </ng-container>
+</div>
+<!-- <mat-option *ngFor="let opt of options; let i = index" [value]="options">
+  <mat-checkbox
+    [checked]="selected === i"
+    (change)="onChange(topping); selected = i"
+  >
+    {{ topping }}</mat-checkbox
+  >
+</mat-option> -->

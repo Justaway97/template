@@ -1,0 +1,15 @@
+<ng-container *ngIf="!loading">
+  <button mat-icon-button [matMenuTriggerFor]="menu.childMenu">
+    <ng-container *ngIf="icon">
+      <mat-icon>{{ icon }}</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="!icon">
+      <span>{{ label }}</span>
+    </ng-container>
+  </button>
+  <app-menu-child
+    #menu
+    [options]="options"
+    (click)="valueChanged($event)"
+  ></app-menu-child
+></ng-container>
