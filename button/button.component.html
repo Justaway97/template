@@ -1,21 +1,25 @@
-<ng-container *ngIf="!isIcon">
-  <button
-    mat-stroked-button
-    [matTooltip]="tooltip"
-    [matTooltipPosition]="tooltipPosition"
-    [color]="color"
-    (click)="valueChanged($event)"
-  >
-    {{ label }}
-  </button>
-</ng-container>
-<ng-container *ngIf="isIcon">
-  <button
-    mat-icon-button
-    (click)="valueChanged($event)"
-    [matTooltip]="tooltip"
-    [matTooltipPosition]="tooltipPosition"
-  >
-    <mat-icon>{{ label }}</mat-icon>
-  </button>
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <ng-container *ngIf="!isIcon">
+    <button
+      mat-stroked-button
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [color]="color"
+      (click)="valueChanged($event)"
+      [type]="type"
+    >
+      {{ label }}
+    </button>
+  </ng-container>
+  <ng-container *ngIf="isIcon">
+    <button
+      mat-icon-button
+      (click)="valueChanged($event)"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [type]="type"
+    >
+      <mat-icon>{{ label }}</mat-icon>
+    </button>
+  </ng-container>
 </ng-container>

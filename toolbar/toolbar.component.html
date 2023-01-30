@@ -1,42 +1,51 @@
 <mat-toolbar [color]="color">
   <ng-container
-    *ngIf="item.left"
+    *ngIf="item?.left"
     [ngTemplateOutlet]="itemList"
-    [ngTemplateOutletContext]="{ list: item.left }"
+    [ngTemplateOutletContext]="{ list: item?.left }"
   >
   </ng-container>
   <span class="spacer"></span>
   <ng-container
-    *ngIf="item.right"
+    *ngIf="item?.right"
     [ngTemplateOutlet]="itemList"
-    [ngTemplateOutletContext]="{ list: item.right }"
+    [ngTemplateOutletContext]="{ list: item?.right }"
   >
   </ng-container>
 </mat-toolbar>
 
 <ng-template #itemList let-list="list">
   <ng-container *ngFor="let item of list">
-    <ng-container *ngIf="item.type === 'button'">
-      <ng-container *ngIf="item.display === 'icon'">
-        <ng-container *ngIf="item.options">
-          <app-menu
-            [icon]="item.text"
-            [options]="item.options"
-            (change)="optionSelected(item.text)"
-          ></app-menu>
-        </ng-container>
-        <ng-container *ngIf="!item.options">
-          <app-button
-            [label]="item.text"
-            (click)="optionSelected(item.text)"
-            [isIcon]="true"
-          ></app-button>
+    <ng-container
+      *ngIf="
+        !item.role || (item.role.length > 0 && item.role.includes(userRole))
+      "
+    >
+      <ng-container *ngIf="item.type === 'button'">
+        <ng-container *ngIf="item.display === 'icon'">
+          <ng-container *ngIf="item.options">
+            <app-menu
+              [icon]="item.text"
+              [options]="item.options"
+              (change)="optionSelected(item.text)"
+            ></app-menu>
+          </ng-container>
+          <ng-container *ngIf="!item.options">
+            <app-button
+              [label]="item.text"
+              (click)="optionSelected(item.text)"
+              [isIcon]="true"
+              [tooltip]="item.tooltip"
+            ></app-button>
+          </ng-container>
         </ng-container>
       </ng-container>
-    </ng-container>
-    <ng-container *ngIf="item.display === 'text'">
-      <ng-container *ngIf="item.type === 'text'">
-        <span>{{ item.text }}</span>
+      <ng-container *ngIf="item.display === 'text'">
+        <ng-container *ngIf="item.type === 'text'">
+          <span class="pointer" (click)="optionSelected(item.text)">{{
+            item.text
+          }}</span>
+        </ng-container>
       </ng-container>
     </ng-container>
   </ng-container>

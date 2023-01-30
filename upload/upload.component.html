@@ -1,0 +1,38 @@
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <div class="component">
+    <div class="label">
+      <mat-label>{{ label }}</mat-label>
+    </div>
+    <app-error
+      [isValidate]="isValidate"
+      [value]="value"
+      [label]="label"
+      [required]="required"
+      [placeholder]="placeholder"
+    ></app-error>
+    <button mat-raised-button color="primary" (click)="onClick($event)">
+      <mat-icon>add</mat-icon>
+      upload
+    </button>
+    <input
+      #fileUpload
+      type="file"
+      class="upload-hidden"
+      (change)="onFileSelected($event)"
+    />
+
+    <div *ngFor="let f of files">
+      <div class="file-list">
+        <app-button
+          label="get_app"
+          (click)="onDownload()"
+          [isIcon]="true"
+        ></app-button>
+        <span>{{ f.name }}</span>
+        <button mat-icon-button color="primary" (click)="removeFile($event, f)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

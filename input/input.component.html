@@ -1,15 +1,28 @@
-<form class="example-form">
-  <div class="label">
-    <mat-label>{{ label }}</mat-label>
-  </div>
-  <mat-form-field appearance="fill">
-    <mat-label>{{ label }}</mat-label>
-    <input
-      #myInput
-      matInput
-      [placeholder]="placeholder"
-      [formControl]="inputControl"
-      (blur)="onBlur()"
-    />
-  </mat-form-field>
-</form>
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <form class="example-form">
+    <div class="component">
+      <div class="label">
+        <mat-label>{{ label }}</mat-label>
+      </div>
+      <app-error
+        [isValidate]="isValidate"
+        [value]="value"
+        [label]="label"
+        [required]="required"
+        [placeholder]="placeholder"
+      ></app-error>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ placeholder }}</mat-label>
+        <input
+          [type]="type"
+          #myInput
+          matInput
+          [placeholder]="placeholder"
+          [formControl]="inputControl"
+          (blur)="onBlur()"
+          [required]="required"
+        />
+      </mat-form-field>
+    </div>
+  </form>
+</ng-container>

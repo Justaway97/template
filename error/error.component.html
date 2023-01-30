@@ -1,0 +1,8 @@
+<span class="component-error" *ngIf="!isValidate && !value && required">
+  <ng-container *ngIf="label"> {{ label }} </ng-container
+  ><ng-container *ngIf="placeholder">
+    {{ placeholder }}
+  </ng-container>
+  is
+  <strong>required</strong>
+</span>

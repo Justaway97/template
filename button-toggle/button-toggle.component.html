@@ -1,14 +1,25 @@
-<ng-container *ngIf="label">
-  <div class="label">
-    <mat-label>{{ label }}</mat-label>
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <div class="component">
+    <ng-container *ngIf="label">
+      <div class="label">
+        <mat-label>{{ label }}</mat-label>
+      </div>
+    </ng-container>
+    <app-error
+      [isValidate]="isValidate"
+      [value]="value"
+      [label]="label"
+      [required]="required"
+      [placeholder]="placeholder"
+    ></app-error>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      (change)="valueChanged(group.value)"
+      [value]="value"
+    >
+      <ng-container *ngFor="let opt of options">
+        <mat-button-toggle [value]="opt">{{ opt }}</mat-button-toggle>
+      </ng-container>
+    </mat-button-toggle-group>
   </div>
 </ng-container>
-<mat-button-toggle-group
-  #group="matButtonToggleGroup"
-  (change)="valueChanged(group.value)"
-  [value]="value"
->
-  <ng-container *ngFor="let opt of options">
-    <mat-button-toggle [value]="opt">{{ opt }}</mat-button-toggle>
-  </ng-container>
-</mat-button-toggle-group>

@@ -5,12 +5,12 @@ import {
   OnInit,
   Output,
   SimpleChange,
-} from '@angular/core';
+} from "@angular/core";
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  selector: "app-table",
+  templateUrl: "./table.component.html",
+  styleUrls: ["./table.component.scss"],
 })
 export class TableComponent implements OnInit {
   @Input() headers: any[];
@@ -18,7 +18,11 @@ export class TableComponent implements OnInit {
   @Output() onTableChange = new EventEmitter();
   @Output() rowOption = new EventEmitter();
 
+  pageSizeOptions: any[] = [3, 5, 10];
+  currentPageIndex: any = 0;
+  currentPageSize: any = 3;
   header: string[];
+  data: any[];
 
   // checkbox
   checkboxValue: any[] = [];
@@ -36,6 +40,7 @@ export class TableComponent implements OnInit {
     if (this.headers) {
       this.header = this.headers.map((h) => h.header);
     }
+    this.onDataChange();
   }
 
   ngOnInit(): void {}
@@ -57,7 +62,30 @@ export class TableComponent implements OnInit {
   }
 
   onChange($event: any, header: any, index?: number) {
-    if (typeof $event != 'object' || $event instanceof Array)
+    if (typeof $event != "object" || $event instanceof Array)
       this.onTableChange.emit({ $event, header, index });
+  }
+
+  onPaginateChange($event: any) {
+    this.currentPageIndex = $event.pageIndex;
+    this.currentPageSize = $event.pageSize;
+    this.onDataChange();
+  }
+
+  onDataChange() {
+    this.data = [];
+    if (this.dataSource)
+      for (
+        let i =
+          this.currentPageIndex * this.currentPageSize > this.dataSource.length
+            ? 0
+            : this.currentPageIndex * this.currentPageSize;
+        i <
+          this.currentPageIndex * this.currentPageSize + this.currentPageSize &&
+        i < this.dataSource.length;
+        i++
+      ) {
+        this.data.push(JSON.parse(JSON.stringify(this.dataSource[i])));
+      }
   }
 }

@@ -6,32 +6,45 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CodeService } from '../services/code.service';
+} from "@angular/core";
+import { ControlValueAccessor } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { CodeService } from "../services/code.service";
+import { TemplateService } from "../services/template.service";
 
 @Component({
-  selector: 'app-base',
-  templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
+  selector: "app-base",
+  templateUrl: "./base.component.html",
+  styleUrls: ["./base.component.scss"],
 })
 export class BaseComponent implements ControlValueAccessor {
   @Output() change = new EventEmitter();
-  @Input() placeholder: string = '';
+  @Input() placeholder: string = "";
   @Input() disabled = false;
   @Input() label: string;
   @Input() options: any[];
   @Input() optionRule: string;
   @Input() authorize: string;
+  @Input() value: any;
+  @Input() required = false;
+  @Input() isValidate = false;
+  @Input() role: any[];
+  @Input() userRole: any;
+
   optionLoading = false;
 
-  @Input() value: any;
   constructor(
     protected snackBar: MatSnackBar,
     protected cdr: ChangeDetectorRef,
-    protected codeService: CodeService
-  ) {}
+    protected codeService: CodeService,
+    protected templateService: TemplateService
+  ) {
+    setTimeout(() => {
+      this.templateService.onUserRoleChange.subscribe(
+        (userRole) => (this.userRole = userRole)
+      );
+    }, 0);
+  }
 
   ngOnInit(): void {}
 

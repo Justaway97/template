@@ -1,23 +1,30 @@
 <mat-menu #childMenu="matMenu" [overlapTrigger]="false">
   <span *ngFor="let option of options">
-    <span *ngIf="option.children && option.children.length > 0">
-      <button
-        mat-menu-item
-        color="primary"
-        [matMenuTriggerFor]="menu.childMenu"
-      >
-        <span>{{ option.name }}</span>
-      </button>
-      <app-menu-child
-        #menu
-        [options]="option.children"
-        (click)="onClick($event)"
-      ></app-menu-child>
-    </span>
-    <span *ngIf="!option.children || option.children.length === 0">
-      <button mat-menu-item (click)="onClick(option.name)">
-        <span>{{ option.name }}</span>
-      </button>
-    </span>
+    <ng-container
+      *ngIf="
+        !option.role ||
+        (option.role.length > 0 && option.role.includes(userRole))
+      "
+    >
+      <span *ngIf="option.children && option.children.length > 0">
+        <button
+          mat-menu-item
+          color="primary"
+          [matMenuTriggerFor]="menu.childMenu"
+        >
+          <span>{{ option.name }}</span>
+        </button>
+        <app-menu-child
+          #menu
+          [options]="option.children"
+          (click)="onClick($event)"
+        ></app-menu-child>
+      </span>
+      <span *ngIf="!option.children || option.children.length === 0">
+        <button mat-menu-item (click)="onClick(option.name)">
+          <span>{{ option.name }}</span>
+        </button>
+      </span>
+    </ng-container>
   </span>
 </mat-menu>

@@ -1,105 +1,127 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container *ngFor="let header of headers">
-    <ng-container [matColumnDef]="header.header">
-      <ng-container *ngIf="header.type === 'select'">
-        <th mat-header-cell *matHeaderCellDef>
-          <!-- <app-checkbox
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="data">
+    <ng-container *ngFor="let header of headers">
+      <ng-container [matColumnDef]="header.header">
+        <ng-container *ngIf="header.type === 'select'">
+          <th mat-header-cell *matHeaderCellDef>
+            <!-- <app-checkbox
             [options]="['all']"
             [value]="headerCheckbox === true ? ['all'] : []"
             (change)="onHeaderCheckboxChange($event, header.header)"
             [displayOption]="false"
           >
           </app-checkbox> -->
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-checkbox
-            [options]="[checkboxOptions[i]]"
-            [value]="checkboxValue.includes(i) ? [i] : []"
-            (change)="onHeaderCheckboxChange($event, header.header, i)"
-            [displayOption]="false"
-          >
-          </app-checkbox>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'input'">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-input
-            [value]="element.input.value"
-            (inputChange)="onChange($event, header.header, i)"
-          ></app-input>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'autoComplete'">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-auto-complete
-            [options]="element[header.header].options"
-            [optionRule]="element[header.header].optionRule"
-            [disabled]="element[header.header].disabled"
-            [value]="element[header.header].value"
-            (change)="onChange($event, header.header, i)"
-          ></app-auto-complete>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'buttonToggle'">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-button-toggle
-            [options]="element[header.header].options"
-            [optionRule]="element[header.header].optionRule"
-            [value]="element[header.header].value"
-            (change)="onChange($event, header.header, i)"
-          ></app-button-toggle>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'menu'">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-menu
-            [icon]="element[header.header].icon"
-            [options]="element[header.header].options"
-            (change)="menuOutput($event, element[header.header].options, i)"
-          ></app-menu>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'multiAutoComplete'">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-multi-auto-complete
-            [optionRule]="element[header.header].optionRule"
-            [options]="element[header.header].options"
-            [value]="element[header.header].value"
-            (change)="onChange($event, header.header, i)"
-          ></app-multi-auto-complete>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'datePicker'">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ header.text }}
-        </th>
-        <td mat-cell *matCellDef="let element; index as i">
-          <app-date-picker
-            [value]="element[header.header].value"
-            (change)="onChange($event, header.header, i)"
-          ></app-date-picker>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="header.type === 'label'">
-        <th mat-header-cell *matHeaderCellDef>{{ header.text }}</th>
-        <td mat-cell *matCellDef="let element">{{ element[header.header] }}</td>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-checkbox
+              [options]="[checkboxOptions[i]]"
+              [value]="checkboxValue.includes(i) ? [i] : []"
+              (change)="onHeaderCheckboxChange($event, header.header, i)"
+              [displayOption]="false"
+            >
+            </app-checkbox>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'input'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-input
+              [value]="element.input.value"
+              (inputChange)="onChange($event, header.header, i)"
+            ></app-input>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'autoComplete'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-auto-complete
+              [options]="element[header.header].options"
+              [optionRule]="element[header.header].optionRule"
+              [disabled]="element[header.header].disabled"
+              [value]="element[header.header].value"
+              (change)="onChange($event, header.header, i)"
+            ></app-auto-complete>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'buttonToggle'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-button-toggle
+              [options]="element[header.header].options"
+              [optionRule]="element[header.header].optionRule"
+              [value]="element[header.header].value"
+              (change)="onChange($event, header.header, i)"
+            ></app-button-toggle>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'menu'">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-menu
+              [icon]="element[header.header].icon"
+              [options]="element[header.header].options"
+              (change)="menuOutput($event, element[header.header].options, i)"
+            ></app-menu>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'multiAutoComplete'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-multi-auto-complete
+              [optionRule]="element[header.header].optionRule"
+              [options]="element[header.header].options"
+              [value]="element[header.header].value"
+              (change)="onChange($event, header.header, i)"
+            ></app-multi-auto-complete>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'datePicker'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ header.text }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <app-date-picker
+              [value]="element[header.header].value"
+              (change)="onChange($event, header.header, i)"
+            ></app-date-picker>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="header.type === 'label'">
+          <th mat-header-cell *matHeaderCellDef>{{ header.text }}</th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element[header.header]?.value">
+              <app-label
+                [label]="element[header.header].value"
+                [options]="element[header.header].options"
+                [optionRule]="element[header.header].optionRule"
+              ></app-label>
+            </ng-container>
+            <ng-container
+              *ngIf="element[header.header] && !element[header.header].value"
+            >
+              <app-label [label]="element[header.header]"></app-label>
+            </ng-container>
+          </td>
+        </ng-container>
       </ng-container>
     </ng-container>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="header"></tr>
-  <tr mat-row *matRowDef="let row; columns: header"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="header"></tr>
+    <tr mat-row *matRowDef="let row; columns: header"></tr>
+  </table>
+  <mat-paginator
+    *ngIf="dataSource.length > 0"
+    [length]="dataSource.length"
+    [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons
+    (page)="onPaginateChange($event)"
+  ></mat-paginator>
+</div>

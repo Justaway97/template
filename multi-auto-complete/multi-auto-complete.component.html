@@ -1,34 +1,45 @@
-<ng-container *ngIf="label">
-  <div class="label">
-    <mat-label>{{ label }}</mat-label>
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <div class="component">
+    <ng-container *ngIf="label">
+      <div class="label">
+        <mat-label>{{ label }}</mat-label>
+      </div>
+    </ng-container>
+    <app-error
+      [isValidate]="isValidate"
+      [value]="value"
+      [required]="required"
+      [label]="label"
+      [placeholder]="placeholder"
+    ></app-error>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ placeholder }}</mat-label>
+      <mat-chip-grid #chipList>
+        <mat-chip *ngFor="let option of value" (removed)="remove(option)">
+          {{ option }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          #optionInput
+          [formControl]="myFormControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        />
+      </mat-chip-grid>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="valueChanged($event)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="options"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 </ng-container>
-<mat-form-field appearance="fill">
-  <mat-label>{{ placeholder }}</mat-label>
-  <mat-chip-grid #chipList>
-    <mat-chip *ngFor="let option of value" (removed)="remove(option)">
-      {{ option }}
-      <button matChipRemove>
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-chip>
-    <input
-      #optionInput
-      [formControl]="myFormControl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-    />
-  </mat-chip-grid>
-  <mat-autocomplete
-    #auto="matAutocomplete"
-    (optionSelected)="valueChanged($event)"
-  >
-    <mat-option
-      *ngFor="let option of filteredOptions | async"
-      [value]="options"
-    >
-      {{ option }}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>

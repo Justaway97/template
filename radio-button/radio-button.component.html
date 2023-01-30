@@ -1,17 +1,29 @@
-<ng-container *ngIf="label">
-  <div class="label">
-    <mat-label>{{ label }}</mat-label>
+<ng-container *ngIf="!role || (role.length > 0 && role.includes(userRole))">
+  <div class="component">
+    <ng-container *ngIf="label">
+      <div class="label">
+        <mat-label>{{ label }}</mat-label>
+      </div>
+    </ng-container>
+    <app-error
+      [isValidate]="isValidate"
+      [value]="value"
+      [label]="label"
+      [required]="required"
+      [placeholder]="placeholder"
+    ></app-error>
+    <mat-radio-group [(ngModel)]="value">
+      <div [class]="layout === 'vertical' ? 'radio-vertical' : 'radio'">
+        <mat-radio-button
+          class="option"
+          *ngFor="let option of options"
+          [checked]="value == option"
+          [value]="option"
+          (change)="valueChanged(option)"
+        >
+          {{ option }}
+        </mat-radio-button>
+      </div>
+    </mat-radio-group>
   </div>
 </ng-container>
-<mat-radio-group [(ngModel)]="value">
-  <div [class]="layout === 'vertical' ? 'radio-vertical' : 'radio'">
-    <mat-radio-button
-      class="option"
-      *ngFor="let option of options"
-      [value]="option"
-      (change)="valueChanged(option)"
-    >
-      {{ option }}
-    </mat-radio-button>
-  </div>
-</mat-radio-group>

@@ -6,32 +6,35 @@ import {
   OnInit,
   SimpleChanges,
   ViewChild,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
-import { BaseComponent } from '../base/base.component';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CodeService } from '../services/code.service';
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { map, Observable, startWith } from "rxjs";
+import { BaseComponent } from "../base/base.component";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { CodeService } from "../services/code.service";
+import { TemplateService } from "../services/template.service";
 
 @Component({
-  selector: 'app-multi-auto-complete',
-  templateUrl: './multi-auto-complete.component.html',
-  styleUrls: ['./multi-auto-complete.component.scss'],
+  selector: "app-multi-auto-complete",
+  templateUrl: "./multi-auto-complete.component.html",
+  styleUrls: ["./multi-auto-complete.component.scss"],
 })
 export class MultiAutoCompleteComponent extends BaseComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  myFormControl = new FormControl('');
+  myFormControl = new FormControl("");
   filteredOptions: Observable<string[]>;
+  override value: any = [];
 
-  @ViewChild('optionInput') optionInput: ElementRef<HTMLInputElement>;
+  @ViewChild("optionInput") optionInput: ElementRef<HTMLInputElement>;
 
   constructor(
     protected override snackBar: MatSnackBar,
     protected override cdr: ChangeDetectorRef,
-    protected override codeService: CodeService
+    protected override codeService: CodeService,
+    protected override templateService: TemplateService
   ) {
-    super(snackBar, cdr, codeService);
+    super(snackBar, cdr, codeService, templateService);
   }
 
   override ngOnInit(): void {
@@ -45,9 +48,9 @@ export class MultiAutoCompleteComponent extends BaseComponent {
     setTimeout(() => {
       if (this.options) {
         this.filteredOptions = this.myFormControl.valueChanges.pipe(
-          startWith(''),
+          startWith(""),
           map((value) => {
-            if (typeof value === 'string') {
+            if (typeof value === "string") {
               return this.options.filter((option) => {
                 return option.toLowerCase().includes(value.toLowerCase());
               });
@@ -69,11 +72,11 @@ export class MultiAutoCompleteComponent extends BaseComponent {
   }
 
   override valueChanged(event: any): void {
-    if (!this.value.includes(event.option.viewValue)) {
+    if (this.value && !this.value.includes(event.option.viewValue)) {
       this.value.push(event.option.viewValue);
     }
-    this.optionInput.nativeElement.value = '';
-    this.myFormControl.setValue('');
+    this.optionInput.nativeElement.value = "";
+    this.myFormControl.setValue("");
     this.formatAndReturnValue();
   }
 }
